@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Horizon Drip — Horizon City, TX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sand: #F2EDE4;
+      --sand-dark: #E8E0D2;
+      --clay: #C17A50;
+      --clay-dark: #9A5C35;
+      --mesa: #3D2B1F;
+      --dusk: #7A5C4E;
+      --sky: #B8CDD6;
+      --white: #FAF8F4;
+      --text: #2A1E17;
+      --text-muted: #7A6558;
+      --border: rgba(61,43,31,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Mono', monospace;
+      background: var(--sand);
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.25rem 2.5rem;
+      background: var(--sand);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 300; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--mesa); text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--text-muted);
+      font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--clay); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0 2.5rem 5rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        linear-gradient(180deg, transparent 55%, var(--sand) 100%),
+        linear-gradient(135deg, #D4A882 0%, #B8805A 30%, #7A4A2E 60%, #3D2B1F 100%);
+    }
+    /* Mesa silhouette SVG layers */
+    .hero-mesas {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 1;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 680px; }
+    .hero-eyebrow {
+      font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--sand); opacity: 0.65; margin-bottom: 1rem;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(64px, 10vw, 120px);
+      font-weight: 300; line-height: 0.9;
+      color: var(--white); letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+    }
+    .hero-title em { font-style: italic; color: #F0C9A0; }
+    .hero-sub {
+      font-size: 12px; color: rgba(242,237,228,0.75);
+      letter-spacing: 0.05em; margin-bottom: 2.5rem;
+      max-width: 380px;
+    }
+    .btn {
+      display: inline-block; padding: 0.85rem 2rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+      text-decoration: none; cursor: pointer; border: none;
+      transition: all 0.25s;
+    }
+    .btn-light {
+      background: var(--white); color: var(--mesa);
+    }
+    .btn-light:hover { background: var(--sand-dark); }
+    .btn-clay {
+      background: var(--clay); color: var(--white);
+    }
+    .btn-clay:hover { background: var(--clay-dark); }
+    .btn-outline {
+      background: transparent; color: var(--clay);
+      border: 1px solid var(--clay);
+    }
+    .btn-outline:hover { background: var(--clay); color: var(--white); }
+
+    /* ── ABOUT ── */
+    #about {
+      padding: 7rem 2.5rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;
+      max-width: 1100px; margin: 0 auto;
+      align-items: center;
+    }
+    .about-label {
+      font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--clay); margin-bottom: 1.25rem;
+    }
+    .about-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 4vw, 52px); font-weight: 300;
+      line-height: 1.15; color: var(--mesa);
+      margin-bottom: 1.5rem;
+    }
+    .about-title em { font-style: italic; }
+    .about-body {
+      color: var(--text-muted); line-height: 1.85; margin-bottom: 1rem;
+    }
+    .about-visual {
+      position: relative; aspect-ratio: 4/5;
+      background: linear-gradient(160deg, #C49A72 0%, #8B5E3C 50%, #4A2E1C 100%);
+      overflow: hidden;
+    }
+    .about-visual-text {
+      position: absolute; bottom: 2rem; left: 2rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px; font-weight: 300; color: rgba(255,255,255,0.12);
+      line-height: 1; letter-spacing: 0.05em;
+    }
+    .about-visual::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 3px,
+        rgba(255,255,255,0.03) 3px,
+        rgba(255,255,255,0.03) 4px
+      );
+    }
+    .about-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+    .stat { border-top: 1px solid var(--border); padding-top: 1rem; }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px; font-weight: 300; color: var(--clay);
+    }
+    .stat-label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.08em; }
+
+    /* ── MENU ── */
+    #menu {
+      background: var(--mesa);
+      padding: 7rem 2.5rem;
+    }
+    .menu-inner { max-width: 900px; margin: 0 auto; }
+    .section-header {
+      display: flex; justify-content: space-between;
+      align-items: flex-end; margin-bottom: 3.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 1.5rem;
+    }
+    .section-label-light {
+      font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--clay); margin-bottom: 0.5rem;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 4vw, 54px); font-weight: 300;
+      color: var(--white); line-height: 1;
+    }
+    .menu-note { font-size: 11px; color: rgba(255,255,255,0.35); max-width: 200px; text-align: right; }
+
+    .menu-category { margin-bottom: 3rem; }
+    .menu-cat-label {
+      font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--clay); margin-bottom: 1rem; padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .menu-item {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 0.85rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+      gap: 1rem;
+    }
+    .menu-item:last-child { border-bottom: none; }
+    .mi-left { flex: 1; }
+    .mi-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px; font-weight: 400; color: var(--white);
+    }
+    .mi-badge {
+      display: inline-block; font-size: 9px; letter-spacing: 0.1em;
+      padding: 2px 7px; background: rgba(193,122,80,0.2);
+      color: var(--clay); margin-left: 8px; vertical-align: middle;
+    }
+    .mi-desc { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+    .mi-price { font-size: 13px; color: rgba(255,255,255,0.5); white-space: nowrap; }
+
+    /* ── ORDER ── */
+    #order {
+      padding: 7rem 2.5rem;
+      max-width: 700px; margin: 0 auto;
+    }
+    .order-header { margin-bottom: 3rem; }
+    .order-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 4vw, 52px); font-weight: 300;
+      color: var(--mesa); line-height: 1.1; margin-bottom: 0.75rem;
+    }
+    .order-sub { color: var(--text-muted); font-size: 12px; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .form-full { grid-column: 1 / -1; }
+
+    .field { display: flex; flex-direction: column; gap: 0.4rem; }
+    .field label {
+      font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .field input,
+    .field select,
+    .field textarea {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px; color: var(--text);
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: 0.75rem 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--clay);
+    }
+    .field textarea { resize: vertical; min-height: 100px; }
+    .field select {
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='7' viewBox='0 0 12 7' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%237A6558' stroke-width='1.5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+      cursor: pointer;
+    }
+
+    .order-items { margin: 2rem 0; }
+    .order-items-label {
+      font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 1rem;
+    }
+    .item-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem;
+    }
+    .item-check { display: none; }
+    .item-label {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.65rem 0.9rem;
+      border: 1px solid var(--border);
+      background: var(--white);
+      cursor: pointer; transition: all 0.18s;
+      user-select: none;
+    }
+    .item-label:hover { border-color: var(--clay); }
+    .item-check:checked + .item-label {
+      background: var(--clay); color: var(--white);
+      border-color: var(--clay);
+    }
+    .item-check:checked + .item-label .il-price { color: rgba(255,255,255,0.7); }
+    .il-name { font-size: 12px; }
+    .il-price { font-size: 11px; color: var(--text-muted); }
+
+    .qty-row {
+      display: flex; align-items: center; gap: 1rem;
+      margin-top: 1.25rem;
+    }
+    .qty-label { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); }
+    .qty-control { display: flex; align-items: center; gap: 0; }
+    .qty-btn {
+      width: 32px; height: 32px; border: 1px solid var(--border);
+      background: var(--white); cursor: pointer; font-size: 16px;
+      color: var(--mesa); display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s;
+    }
+    .qty-btn:hover { background: var(--sand-dark); }
+    .qty-val {
+      width: 40px; height: 32px; border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border); background: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; color: var(--mesa);
+    }
+
+    .form-submit { margin-top: 2rem; }
+    .submit-btn {
+      width: 100%; padding: 1rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+      background: var(--mesa); color: var(--white);
+      border: none; cursor: pointer; transition: background 0.2s;
+    }
+    .submit-btn:hover { background: var(--clay); }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .form-msg {
+      margin-top: 1.25rem; padding: 1rem;
+      font-size: 12px; display: none;
+    }
+    .form-msg.success {
+      display: block; background: #EAF3DE; color: #3B6D11;
+      border: 1px solid #C0DD97;
+    }
+    .form-msg.error {
+      display: block; background: #FCEBEB; color: #A32D2D;
+      border: 1px solid #F7C1C1;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--mesa); color: rgba(255,255,255,0.4);
+      padding: 3rem 2.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 11px; letter-spacing: 0.08em;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px; font-weight: 300; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(255,255,255,0.6);
+    }
+    footer a { color: rgba(255,255,255,0.4); text-decoration: none; }
+    footer a:hover { color: var(--clay); }
+
+    /* ── DIVIDER ── */
+    .mesa-divider {
+      width: 100%; overflow: hidden; line-height: 0;
+    }
+    .mesa-divider svg { display: block; width: 100%; }
+
+    /* ── ANIMATIONS ── */
+    .fade-up {
+      opacity: 0; transform: translateY(24px);
+      animation: fadeUp 0.8s ease forwards;
+    }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.25s; }
+    .delay-3 { animation-delay: 0.4s; }
+    .delay-4 { animation-delay: 0.55s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { gap: 1.25rem; }
+      #about { grid-template-columns: 1fr; gap: 2.5rem; padding: 4rem 1.25rem; }
+      .about-visual { display: none; }
+      #hero { padding: 0 1.25rem 4rem; }
+      #menu { padding: 4rem 1.25rem; }
+      #order { padding: 4rem 1.25rem; }
+      .form-grid { grid-template-columns: 1fr; }
+      .item-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">The Horizon Drip</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#order">Order</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <!-- Mesa silhouette -->
+    <div class="hero-mesas">
+      <svg viewBox="0 0 1440 260" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M0,260 L0,180 L80,180 L80,140 L200,140 L200,160 L320,160 L320,110 L480,110 L480,140 L560,140 L560,120 L680,120 L680,150 L750,150 L750,100 L900,100 L900,130 L980,130 L980,115 L1100,115 L1100,145 L1200,145 L1200,125 L1340,125 L1340,155 L1440,155 L1440,260 Z" fill="#F2EDE4"/>
+        <path d="M0,260 L0,200 L60,200 L60,170 L150,170 L150,185 L260,185 L260,155 L380,155 L380,175 L450,175 L450,160 L560,160 L560,178 L630,178 L630,148 L760,148 L760,168 L850,168 L850,148 L960,148 L960,168 L1040,168 L1040,150 L1160,150 L1160,172 L1280,172 L1280,155 L1380,155 L1380,178 L1440,178 L1440,260 Z" fill="#E8E0D2" opacity="0.6"/>
+      </svg>
+    </div>
+    <div class="hero-content">
+      <p class="hero-eyebrow fade-up">Horizon City, Texas · Est. 2024</p>
+      <h1 class="hero-title fade-up delay-1">Where the<br><em>desert</em><br>meets your cup</h1>
+      <p class="hero-sub fade-up delay-2">Specialty coffee rooted in the West Texas borderland. Modern craft, honest prices, and a place worth lingering in.</p>
+      <div class="fade-up delay-3" style="display:flex; gap:1rem; flex-wrap:wrap;">
+        <a href="#order" class="btn btn-light">Order ahead</a>
+        <a href="#menu" class="btn btn-outline" style="border-color:rgba(242,237,228,0.5);color:var(--white);">View menu</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div>
+      <p class="about-label">Our story</p>
+      <h2 class="about-title">Built for<br><em>this corner</em><br>of the desert</h2>
+      <p class="about-body">The Horizon Drip was born from a simple idea: Horizon City deserves a coffee shop as good as anywhere in El Paso — or anywhere at all. We source single-origin beans, pull clean espresso, and make every drink by hand.</p>
+      <p class="about-body">Our drinks pull from the borderland — piloncillo, cinnamon, horchata, chile — flavors that belong here. Prices that make sense here too.</p>
+      <div class="about-stats">
+        <div class="stat">
+          <div class="stat-num">4,000<span style="font-size:20px">ft</span></div>
+          <div class="stat-label">High desert elevation</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">$3</div>
+          <div class="stat-label">Espresso starts at</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Single origin beans</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">2</div>
+          <div class="stat-label">House signature drinks</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-visual">
+      <div class="about-visual-text">THE HORIZON<br>DRIP<br>HZN CTY</div>
+    </div>
+  </section>
+
+  <!-- MENU DIVIDER -->
+  <div class="mesa-divider">
+    <svg viewBox="0 0 1440 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <polygon points="0,0 0,40 1440,40 1440,0 1200,28 900,8 600,28 300,8 0,28" fill="#3D2B1F"/>
+    </svg>
+  </div>
+
+  <!-- MENU -->
+  <section id="menu">
+    <div class="menu-inner">
+      <div class="section-header">
+        <div>
+          <p class="section-label-light">What we serve</p>
+          <h2 class="section-title">The Menu</h2>
+        </div>
+        <p class="menu-note">All drinks made to order. Oat, whole, or almond milk available.</p>
+      </div>
+
+      <div class="menu-category">
+        <div class="menu-cat-label">Espresso</div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Espresso</div><div class="mi-desc">Single or double shot, bright + clean</div></div><span class="mi-price">$3 / $3.75</span></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Cortado</div><div class="mi-desc">Equal parts espresso and steamed milk</div></div><span class="mi-price">$4.50</span></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Latte</div><div class="mi-desc">Oat, whole, or almond — 12 oz</div></div><span class="mi-price">$5.50</span></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Cappuccino</div><div class="mi-desc">Dry foam, classic ratio</div></div><span class="mi-price">$4.75</span></div>
+      </div>
+
+      <div class="menu-category">
+        <div class="menu-cat-label">Signature</div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Horizon Drip Latte <span class="mi-badge">house</span></div><div class="mi-desc">Espresso, cinnamon, piloncillo syrup, oat milk</div></div><span class="mi-price">$6</span></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Cold Brew</div><div class="mi-desc">16-hour steep, black or with cream</div></div><span class="mi-price">$5</span></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Agua de Café <span class="mi-badge">house</span></div><div class="mi-desc">Iced espresso, lime, sparkling water, salt rim</div></div><span class="mi-price">$5.50</span></div>
+      </div>
+
+      <div class="menu-category">
+        <div class="menu-cat-label">Non-coffee</div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Matcha Latte</div><div class="mi-desc">Ceremonial grade, oat milk</div></div><span class="mi-price">$5.50</span></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Horchata Chai</div><div class="mi-desc">House chai blend, cinnamon, rice milk</div></div><span class="mi-price">$5.50</span></div>
+      </div>
+
+      <div class="menu-category">
+        <div class="menu-cat-label">Bites</div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Butter Croissant</div><div class="mi-desc">Local bakery, baked fresh daily</div></div><span class="mi-price">$3.50</span></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Pan Dulce of the Day</div><div class="mi-desc">Rotating selection, ask at the bar</div></div><span class="mi-price">$3</span></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Avocado Toast</div><div class="mi-desc">Sourdough, chili flake, cotija, lime</div></div><span class="mi-price">$7</span></div>
+      </div>
+
+      <div style="text-align:center; margin-top:3rem;">
+        <a href="#order" class="btn btn-clay">Order ahead ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORDER DIVIDER -->
+  <div class="mesa-divider" style="transform:rotate(180deg);">
+    <svg viewBox="0 0 1440 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <polygon points="0,0 0,40 1440,40 1440,0 1200,28 900,8 600,28 300,8 0,28" fill="#3D2B1F"/>
+    </svg>
+  </div>
+
+  <!-- ORDER -->
+  <section id="order">
+    <div class="order-header">
+      <p class="about-label">Ready when you arrive</p>
+      <h2 class="order-title">Order Ahead</h2>
+      <p class="order-sub">Tell us what you want and we'll have it ready. We'll reply to confirm your pickup time.</p>
+    </div>
+
+    <!-- SUCCESS / ERROR MESSAGES -->
+    <div class="form-msg success" id="form-success">
+      ✓ &nbsp;Order received! We'll send a confirmation to your email shortly.
+    </div>
+    <div class="form-msg error" id="form-error">
+      Something went wrong. Please try again or call us directly.
+    </div>
+
+    <!-- FORMSPREE FORM (AJAX) -->
+    <form id="order-form" novalidate>
+      <div class="form-grid">
+        <div class="field">
+          <label for="fname">First name</label>
+          <input type="text" id="fname" name="first_name" placeholder="Maria" required />
+        </div>
+        <div class="field">
+          <label for="lname">Last name</label>
+          <input type="text" id="lname" name="last_name" placeholder="Garcia" required />
+        </div>
+        <div class="field form-full">
+          <label for="email">Email address</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required />
+        </div>
+        <div class="field">
+          <label for="pickup">Pickup time</label>
+          <select id="pickup" name="pickup_time" required>
+            <option value="">— select —</option>
+            <option>7:00 AM</option>
+            <option>7:30 AM</option>
+            <option>8:00 AM</option>
+            <option>8:30 AM</option>
+            <option>9:00 AM</option>
+            <option>9:30 AM</option>
+            <option>10:00 AM</option>
+            <option>10:30 AM</option>
+            <option>11:00 AM</option>
+            <option>11:30 AM</option>
+            <option>12:00 PM</option>
+            <option>12:30 PM</option>
+            <option>1:00 PM</option>
+            <option>1:30 PM</option>
+            <option>2:00 PM</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="milk">Milk preference</label>
+          <select id="milk" name="milk">
+            <option value="">— default —</option>
+            <option>Whole milk</option>
+            <option>Oat milk</option>
+            <option>Almond milk</option>
+            <option>No milk</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="order-items">
+        <p class="order-items-label">Select your items</p>
+        <div class="item-grid">
+          <input class="item-check" type="checkbox" id="i1" name="items" value="Espresso ($3)" /><label class="item-label" for="i1"><span class="il-name">Espresso</span><span class="il-price">$3</span></label>
+          <input class="item-check" type="checkbox" id="i2" name="items" value="Cortado ($4.50)" /><label class="item-label" for="i2"><span class="il-name">Cortado</span><span class="il-price">$4.50</span></label>
+          <input class="item-check" type="checkbox" id="i3" name="items" value="Latte ($5.50)" /><label class="item-label" for="i3"><span class="il-name">Latte</span><span class="il-price">$5.50</span></label>
+          <input class="item-check" type="checkbox" id="i4" name="items" value="Cappuccino ($4.75)" /><label class="item-label" for="i4"><span class="il-name">Cappuccino</span><span class="il-price">$4.75</span></label>
+          <input class="item-check" type="checkbox" id="i5" name="items" value="Horizon Drip Latte ($6)" /><label class="item-label" for="i5"><span class="il-name">Horizon Drip Latte ✦</span><span class="il-price">$6</span></label>
+          <input class="item-check" type="checkbox" id="i6" name="items" value="Cold Brew ($5)" /><label class="item-label" for="i6"><span class="il-name">Cold Brew</span><span class="il-price">$5</span></label>
+          <input class="item-check" type="checkbox" id="i7" name="items" value="Agua de Café ($5.50)" /><label class="item-label" for="i7"><span class="il-name">Agua de Café ✦</span><span class="il-price">$5.50</span></label>
+          <input class="item-check" type="checkbox" id="i8" name="items" value="Matcha Latte ($5.50)" /><label class="item-label" for="i8"><span class="il-name">Matcha Latte</span><span class="il-price">$5.50</span></label>
+          <input class="item-check" type="checkbox" id="i9" name="items" value="Horchata Chai ($5.50)" /><label class="item-label" for="i9"><span class="il-name">Horchata Chai</span><span class="il-price">$5.50</span></label>
+          <input class="item-check" type="checkbox" id="i10" name="items" value="Butter Croissant ($3.50)" /><label class="item-label" for="i10"><span class="il-name">Butter Croissant</span><span class="il-price">$3.50</span></label>
+          <input class="item-check" type="checkbox" id="i11" name="items" value="Pan Dulce ($3)" /><label class="item-label" for="i11"><span class="il-name">Pan Dulce</span><span class="il-price">$3</span></label>
+          <input class="item-check" type="checkbox" id="i12" name="items" value="Avocado Toast ($7)" /><label class="item-label" for="i12"><span class="il-name">Avocado Toast</span><span class="il-price">$7</span></label>
+        </div>
+      </div>
+
+      <div class="field" style="margin-top:1.25rem;">
+        <label for="notes">Special instructions</label>
+        <textarea id="notes" name="notes" placeholder="Extra shot, no ice, allergens, etc."></textarea>
+      </div>
+
+      <div class="form-submit">
+        <button type="submit" class="submit-btn" id="submit-btn">Place order</button>
+        <p style="font-size:11px; color:var(--text-muted); margin-top:0.75rem;">We'll email a confirmation. Orders placed 15+ min before pickup time are prioritized.</p>
+      </div>
+    </form>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">The Horizon Drip</div>
+    <div style="text-align:center;">
+      <div>Horizon City, Texas 79928</div>
+      <div style="margin-top:4px;">Mon–Sat 6 AM – 3 PM &nbsp;·&nbsp; Sun 7 AM – 2 PM</div>
+    </div>
+    <div style="text-align:right;">
+      <div>Locally owned</div>
+      <div style="margin-top:4px; color:rgba(255,255,255,0.2);">© 2024 The Horizon Drip</div>
+    </div>
+  </footer>
+
+  <!-- FORMSPREE AJAX -->
+  <script>
+    window.formspree = window.formspree || function () {
+      (formspree.q = formspree.q || []).push(arguments);
+    };
+  </script>
+  <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('order-form');
+      const submitBtn = document.getElementById('submit-btn');
+      const successMsg = document.getElementById('form-success');
+      const errorMsg = document.getElementById('form-error');
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        // Validate at least one item selected
+        const checked = form.querySelectorAll('input[name="items"]:checked');
+        if (checked.length === 0) {
+          alert('Please select at least one item.');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending…';
+        successMsg.style.display = 'none';
+        errorMsg.style.display = 'none';
+
+        // Build FormData — collect all checked items as a readable list
+        const data = new FormData(form);
+        const items = Array.from(checked).map(c => c.value).join(', ');
+        // Remove individual "items" entries, add a clean summary field
+        data.delete('items');
+        data.append('order', items);
+
+        try {
+          const response = await fetch('https://formspree.io/f/xlgzpqwp', {
+            method: 'POST',
+            body: data,
+            headers: { 'Accept': 'application/json' }
+          });
+
+          if (response.ok) {
+            form.reset();
+            successMsg.style.display = 'block';
+            successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          } else {
+            const json = await response.json();
+            console.error(json);
+            errorMsg.style.display = 'block';
+          }
+        } catch (err) {
+          console.error(err);
+          errorMsg.style.display = 'block';
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Place order';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
